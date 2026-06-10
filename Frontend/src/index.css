@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme {
+  --font-inter: "Inter", sans-serif;
+  --color-dark-900: #030712;
+  --color-dark-800: #0F172A;
+  --color-dark-700: #111827;
+  --color-dark-600: #1E293B;
+  --color-dark-500: #334155;
+  --color-dark-400: #475569;
+  --color-dark-300: #64748B;
+  --color-ig-purple: #833AB4;
+  --color-ig-red: #FD1D1D;
+  --color-ig-orange: #FCAF45;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-delayed: float 6s ease-in-out 2s infinite;
+  --animate-float-slow: float 8s ease-in-out 1s infinite;
+  --animate-pulse-glow: pulse-glow 2s ease-in-out infinite;
+  --animate-spin-slow: spin 8s linear infinite;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: "Inter", sans-serif;
+    background: #030712;
+    color: #E2E8F0;
+    overflow-x: hidden;
+    margin: 0;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  ::selection {
+    background: rgba(131, 58, 180, 0.4);
+    color: #fff;
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #030712;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #833AB4, #FD1D1D);
+    border-radius: 4px;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(131, 58, 180, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(253, 29, 29, 0.5), 0 0 60px rgba(131, 58, 180, 0.3); }
+}
