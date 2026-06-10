@@ -6,12 +6,12 @@ import { InstagramIcon } from "./Icons";
 import instaLogo from "../assets/insta-logo.png";
 
 const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "Features", href: "#features" },
-  { label: "FAQ", href: "#faq" },
-  { label: "Blog", href: "#blog" },
-  { label: "Contact", href: "#contact" },
+  { key: "home", href: "#home" },
+  { key: "howItWorks", href: "#how-it-works" },
+  { key: "features", href: "#features" },
+  { key: "faq", href: "#faq" },
+  { key: "blog", href: "#blog" },
+  { key: "contact", href: "#contact" },
 ];
 
 const languages = [
@@ -20,14 +20,21 @@ const languages = [
   { code: "FR", label: "Français" },
   { code: "DE", label: "Deutsch" },
   { code: "HI", label: "हिन्दी" },
+  { code: "PT", label: "Português" },
+  { code: "AR", label: "العربية" },
+  { code: "RU", label: "Русский" },
+  { code: "ZH", label: "中文" },
+  { code: "JA", label: "日本語" },
 ];
+
+import { useLanguage } from "../context/LanguageContext";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
   const [langOpen, setLangOpen] = useState(false);
-  const [selectedLang, setSelectedLang] = useState("EN");
+  const { language: selectedLang, setLanguage: setSelectedLang, t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -61,7 +68,7 @@ export default function Navbar() {
                 href={link.href}
                 className="px-4 py-2 text-sm text-gray-300 hover:text-white rounded-lg hover:bg-white/5 transition-all duration-200"
               >
-                {link.label}
+                {t(`nav.${link.key}`)}
               </a>
             ))}
           </div>
@@ -149,7 +156,7 @@ export default function Navbar() {
                   <a key={link.href} href={link.href} onClick={() => setMobileOpen(false)}
                     className="px-4 py-3 text-gray-300 hover:text-white rounded-xl hover:bg-white/5 transition-all text-base"
                   >
-                    {link.label}
+                    {t(`nav.${link.key}`)}
                   </a>
                 ))}
               </div>

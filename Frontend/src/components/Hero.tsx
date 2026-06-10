@@ -16,13 +16,14 @@ import {
 import { InstagramIcon } from "./Icons";
 import { isValidInstagramUrl, pasteFromClipboard } from "../lib/utils";
 import GradientButton from "./GradientButton";
+import { useLanguage } from "../context/LanguageContext";
 
 const supportedBadges = [
-  { label: "Reels", icon: Film },
-  { label: "Videos", icon: Video },
-  { label: "Photos", icon: Image },
-  { label: "Stories", icon: BookOpen },
-  { label: "Carousel", icon: LayoutGrid },
+  { id: "reels", key: "common.reels", icon: Film },
+  { id: "videos", key: "common.videos", icon: Video },
+  { id: "photos", key: "common.photos", icon: Image },
+  { id: "stories", key: "common.stories", icon: BookOpen },
+  { id: "carousel", key: "common.carousel", icon: LayoutGrid },
 ];
 
 const floatingCards = [
@@ -41,6 +42,7 @@ export default function Hero() {
   const [state, setState] = useState<DownloadState>("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [toast, setToast] = useState<ToastState>(null);
+  const { t } = useLanguage();
 
   const showToast = (type: "success" | "error", message: string) => {
     setToast({ type, message });
@@ -55,15 +57,15 @@ export default function Hero() {
   const handleDownload = async () => {
     if (!url.trim()) {
       setState("error");
-      setErrorMsg("Please enter an Instagram URL");
-      showToast("error", "Please enter an Instagram URL");
+      setErrorMsg(t("error.emptyUrl"));
+      showToast("error", t("error.emptyUrl"));
       setTimeout(() => setState("idle"), 3000);
       return;
     }
     if (!isValidInstagramUrl(url)) {
       setState("error");
-      setErrorMsg("Please enter a valid Instagram URL");
-      showToast("error", "Please enter a valid Instagram URL");
+      setErrorMsg(t("error.invalidUrl"));
+      showToast("error", t("error.invalidUrl"));
       setTimeout(() => setState("idle"), 3000);
       return;
     }
@@ -72,8 +74,8 @@ export default function Hero() {
     // Fake server busy message requested by user
     setTimeout(() => {
       setState("error");
-      setErrorMsg("Server busy, try after 15min later");
-      showToast("error", "Server busy, try after 15min later");
+      setErrorMsg(t("error.serverBusy"));
+      showToast("error", t("error.serverBusy"));
       setTimeout(() => setState("idle"), 3000);
     }, 1500);
 
@@ -146,7 +148,7 @@ export default function Hero() {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
               className="flex flex-wrap gap-2 mb-6"
             >
-              {["100% Free", "Secure", "Fast"].map((tag) => (
+              {[t("hero.badge1"), t("hero.badge2"), t("hero.badge3")].map((tag) => (
                 <span key={tag} className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-full bg-white/5 border border-white/10 text-gray-300">
                   <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-ig-purple to-ig-orange" />
                   {tag}
@@ -155,15 +157,17 @@ export default function Hero() {
             </motion.div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-              Download Instagram{" "}
               <span className="bg-gradient-to-r from-ig-purple via-ig-red to-ig-orange bg-clip-text text-transparent">
-                Reels, Videos, Photos & Stories
-              </span>{" "}
-              Instantly
+                {t("hero.title")}
+              </span>
+              <br />
+              <span className="text-3xl sm:text-4xl lg:text-5xl mt-2 block">
+                {t("hero.subtitle")}
+              </span>
             </h1>
 
             <p className="text-lg text-gray-400 mb-8 max-w-lg leading-relaxed">
-              Paste any public Instagram URL and download content in HD quality. Fast, secure, and completely free.
+              {t("hero.description")}
             </p>
 
             {/* URL Input */}
@@ -176,7 +180,7 @@ export default function Hero() {
                   type="url"
                   value={url}
                   onChange={(e) => { setUrl(e.target.value); if (state === "error") setState("idle"); }}
-                  placeholder="Paste Instagram link here..."
+                  placeholder={t("hero.placeholder")}
                   className={`w-full pl-12 pr-14 py-4 rounded-xl bg-white/5 border text-white placeholder-gray-500 focus:outline-none focus:ring-2 transition-all ${
                     state === "error"
                       ? "border-red-500/50 focus:ring-red-500/30"
@@ -195,7 +199,7 @@ export default function Hero() {
                 {state === "success" && <CheckCircle2 className="w-5 h-5" />}
                 {state === "error" && <AlertCircle className="w-5 h-5" />}
                 {state === "idle" && <Download className="w-5 h-5" />}
-                {state === "loading" ? "Processing..." : state === "success" ? "Done!" : state === "error" ? "Try Again" : "Download Now"}
+                {state === "loading" ? t("hero.btn.processing") : state === "success" ? t("hero.btn.success") : state === "error" ? t("hero.btn.error") : t("hero.btn.download")}
               </GradientButton>
             </div>
 
@@ -209,11 +213,11 @@ export default function Hero() {
             )}
 
             <div className="flex flex-wrap items-center gap-3">
-              <span className="text-sm text-gray-500">We support:</span>
+              <span className="text-sm text-gray-500">{t("hero.supportText")}</span>
               {supportedBadges.map((badge) => (
-                <span key={badge.label} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-white/8 transition-all">
+                <span key={badge.id} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-white/8 transition-all">
                   <badge.icon className="w-3.5 h-3.5" />
-                  {badge.label}
+                  {t(badge.key)}
                 </span>
               ))}
             </div>
