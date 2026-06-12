@@ -1,4 +1,4 @@
-# InstaSave Backend Documentation
+# Save Reel Backend Documentation
 
 ## API Endpoints
 
@@ -122,7 +122,7 @@ export default function InstagramDownloader() {
 
 ### Setup Environment
 1. Open Postman
-2. Create a new environment called "InstaSave Local"
+2. Create a new environment called "Save Reel Local"
 3. Add variable `BASE_URL` = `http://localhost:5000`
 
 ### Test 1: Health Check
@@ -195,8 +195,8 @@ sudo apt install nginx -y
 #### 2. Deploy Application
 ```bash
 # Clone repository
-git clone <your-repo-url> instasave-backend
-cd instasave-backend
+git clone <your-repo-url> savereel-backend
+cd savereel-backend
 
 # Install dependencies
 npm install
@@ -209,7 +209,7 @@ nano .env
 #### 3. Start with PM2
 ```bash
 # Start the app
-pm2 start server.js --name "instasave-api"
+pm2 start server.js --name "savereel-api"
 
 # Save PM2 process list to start on boot
 pm2 save
@@ -219,7 +219,7 @@ pm2 startup
 
 #### 4. Configure Nginx Reverse Proxy
 ```bash
-sudo nano /etc/nginx/sites-available/instasave-api
+sudo nano /etc/nginx/sites-available/savereel-api
 ```
 
 Add the following configuration:
@@ -245,7 +245,7 @@ server {
 
 Enable the site and restart Nginx:
 ```bash
-sudo ln -s /etc/nginx/sites-available/instasave-api /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/savereel-api /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl restart nginx
 ```

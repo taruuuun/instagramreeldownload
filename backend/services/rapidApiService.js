@@ -44,42 +44,49 @@ async function fetchInstagramContent(url) {
       `[${statusTimestamp}] API Response: Status ${response.status} for ${url}`
     );
 
-    if (!response.data) {
+    if (!response.data || !response.data.success || !response.data.data) {
       throw createError(
         404,
-        "Instagram content not found. The post may be private or deleted."
+        response.data?.message || "Instagram content not found or API error."
       );
     }
 
-    const data = response.data;
+    const data = response.data.data;
 
-    // Check if the API returned an error message directly (like "You are not subscribed to this API.")
-    if (data.message && typeof data.message === 'string' && !data.download_url && !data.videoUrl && !data.data) {
-      throw createError(403, `API Error: ${data.message}`);
+    // Extract correct fields from the specific RapidAPI schema the user provided
+    let rawDownloadUrl = data.url; // fallback to main url if no medias
+    let quality = "HD";
+    
+    // Find the mp4 video in medias array if available
+    if (data.medias && Array.isArray(data.medias)) {
+      const videoMedia = data.medias.find(m => m.type === "video" && m.extension === "mp4");
+      if (videoMedia) {
+        rawDownloadUrl = videoMedia.url;
+        quality = videoMedia.quality || "HD";
+      }
     }
 
-    // Try to extract download url from various common rapidapi structures
-    const rawDownloadUrl = data.download_url || data.videoUrl || data.url || (data.data && (data.data.video_url || data.data.download_url)) || "";
-    const rawThumbnail = data.thumbnail_url || data.thumbnailUrl || data.thumbnail || (data.data && data.data.thumbnail_url) || "";
-    const rawTitle = data.title || data.caption || (data.data && (data.data.caption || data.data.title)) || "Instagram Video";
+    const rawThumbnail = data.thumbnail || "";
+    const rawTitle = data.title || "Instagram Video";
+    const duration = data.duration ? formatDuration(data.duration) : "00:00";
+    const username = data.owner?.username || data.author || "";
 
-    // Since we don't have the exact schema, we will pass everything back plus our structured fields
     const result = {
       thumbnail: rawThumbnail,
       title: typeof rawTitle === 'string' ? rawTitle.substring(0, 100) : "Instagram Content",
       downloadUrl: rawDownloadUrl,
-      duration: "00:00",
-      quality: "HD",
+      duration: duration,
+      quality: quality,
       type: "video",
-      username: "",
-      fileSize: "~5 MB",
-      raw_api_response: data // Passing the raw response in case the frontend needs to parse it directly
+      username: username,
+      fileSize: estimateFileSize(data.duration || 15, "video"),
+      raw_api_response: data
     };
 
-    if (!result.downloadUrl && !result.raw_api_response) {
+    if (!result.downloadUrl) {
       throw createError(
         404,
-        "Could not extract download URL. The content may be unsupported."
+        "Could not extract download URL from API response."
       );
     }
 

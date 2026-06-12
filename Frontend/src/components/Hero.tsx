@@ -34,6 +34,8 @@ const floatingCards = [
   { label: "Carousel", icon: "🎠", x: 50, y: 190, delay: 0.8 },
 ];
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || "https://instagramreeldownload-1.onrender.com";
+
 type DownloadState = "idle" | "loading" | "success" | "error";
 type ToastState = { type: "success" | "error", message: string } | null;
 
@@ -42,6 +44,7 @@ export default function Hero() {
   const [state, setState] = useState<DownloadState>("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [toast, setToast] = useState<ToastState>(null);
+  const [downloadResult, setDownloadResult] = useState<any>(null);
   const { t } = useLanguage();
 
   const showToast = (type: "success" | "error", message: string) => {
@@ -51,7 +54,10 @@ export default function Hero() {
 
   const handlePaste = async () => {
     const text = await pasteFromClipboard();
-    if (text) setUrl(text);
+    if (text) {
+      setUrl(text);
+      setDownloadResult(null);
+    }
   };
 
   const handleDownload = async () => {
@@ -70,18 +76,10 @@ export default function Hero() {
       return;
     }
     setState("loading");
+    setDownloadResult(null);
     
-    // Fake server busy message requested by user
-    setTimeout(() => {
-      setState("error");
-      setErrorMsg(t("error.serverBusy"));
-      showToast("error", t("error.serverBusy"));
-      setTimeout(() => setState("idle"), 3000);
-    }, 1500);
-
-    /*
     try {
-      const response = await fetch("http://localhost:5000/api/download", {
+      const response = await fetch(`${API_BASE_URL}/api/download`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url })
@@ -96,6 +94,10 @@ export default function Hero() {
       setState("success");
       showToast("success", "Success! Content fetched successfully.");
       
+      if (data.downloadUrl) {
+        setDownloadResult(data);
+      }
+      
     } catch (err: any) {
       setState("error");
       setErrorMsg(err.message || "Something went wrong.");
@@ -103,7 +105,6 @@ export default function Hero() {
     } finally {
       setTimeout(() => setState("idle"), 3000);
     }
-    */
   };
 
   return (
@@ -210,6 +211,23 @@ export default function Hero() {
                 <AlertCircle className="w-4 h-4" />
                 {errorMsg}
               </motion.p>
+            )}
+
+            {downloadResult && (
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mb-6 p-4 rounded-xl bg-white/5 border border-white/10 flex items-center gap-4">
+                <img src={downloadResult.thumbnail} alt="Thumbnail" className="w-16 h-16 rounded-lg object-cover bg-dark-800 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-white font-medium truncate">{downloadResult.title || "Instagram Video"}</h3>
+                  <p className="text-sm text-gray-400">{downloadResult.quality} • {downloadResult.fileSize}</p>
+                </div>
+                <a 
+                  href={`${API_BASE_URL}/api/download-file?url=${encodeURIComponent(downloadResult.downloadUrl)}&filename=${encodeURIComponent((downloadResult.title || 'instagram_video').substring(0, 30).trim().replace(/[^a-zA-Z0-9]/g, '_') + '.mp4')}`} 
+                  className="px-4 py-2 bg-gradient-to-r from-ig-purple to-ig-orange text-white rounded-lg hover:opacity-90 transition-opacity flex items-center gap-2 text-sm font-medium shrink-0"
+                >
+                  <Download className="w-4 h-4" />
+                  Download
+                </a>
+              </motion.div>
             )}
 
             <div className="flex flex-wrap items-center gap-3">

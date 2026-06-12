@@ -8,7 +8,7 @@ const articles = [
     description: "A complete step-by-step guide to downloading Instagram Reels in the highest quality available. Learn the fastest methods.",
     category: "Tutorial",
     readTime: "5 min read",
-    author: "InstaSave Team",
+    author: "Save Reel Team",
     gradient: "from-ig-purple to-purple-600",
   },
   {
@@ -16,7 +16,7 @@ const articles = [
     description: "Don't miss out on your favorite stories. Learn how to save Instagram stories from any public profile permanently.",
     category: "Guide",
     readTime: "4 min read",
-    author: "InstaSave Team",
+    author: "Save Reel Team",
     gradient: "from-ig-red to-pink-600",
   },
   {
@@ -24,7 +24,7 @@ const articles = [
     description: "Everything you need to know about downloading Instagram videos, IGTV content, and feed videos in original quality.",
     category: "Tutorial",
     readTime: "6 min read",
-    author: "InstaSave Team",
+    author: "Save Reel Team",
     gradient: "from-ig-orange to-amber-500",
   },
 ];

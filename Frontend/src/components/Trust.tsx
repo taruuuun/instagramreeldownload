@@ -3,7 +3,7 @@ import { ShieldCheck, Zap, MonitorSmartphone, UserX } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 
 const trustItems = [
-  { icon: UserX, title: "No Login Required", description: "Use InstaSave without creating any account or sharing personal data", color: "from-blue-500 to-cyan-500" },
+  { icon: UserX, title: "No Login Required", description: "Use Save Reel without creating any account or sharing personal data", color: "from-blue-500 to-cyan-500" },
   { icon: ShieldCheck, title: "Secure Download", description: "All downloads are processed securely. We never store your data", color: "from-green-500 to-emerald-500" },
   { icon: Zap, title: "Instant Processing", description: "Our servers process your download requests in milliseconds", color: "from-ig-purple to-purple-500" },
   { icon: MonitorSmartphone, title: "Works on All Devices", description: "Compatible with phones, tablets, laptops, and desktop computers", color: "from-ig-orange to-amber-500" },
@@ -19,7 +19,7 @@ export default function Trust() {
             Trusted by{" "}
             <span className="bg-gradient-to-r from-ig-purple via-ig-red to-ig-orange bg-clip-text text-transparent">Millions</span>
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto text-lg">Here's why users around the world choose InstaSave</p>
+          <p className="text-gray-400 max-w-2xl mx-auto text-lg">Here's why users around the world choose Save Reel</p>
         </ScrollReveal>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">

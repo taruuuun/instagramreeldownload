@@ -1,5 +1,5 @@
 /**
- * InstaSave Backend - Main Server
+ * Save Reel Backend - Main Server
  * Production-ready Node.js + Express API for Instagram content downloading
  */
 
@@ -88,7 +88,7 @@ app.use(errorHandler);
 // ========================
 app.listen(PORT, () => {
   console.log(`\n========================================`);
-  console.log(`  InstaSave Backend Server`);
+  console.log(`  Save Reel Backend Server`);
   console.log(`========================================`);
   console.log(`  Status:      Running`);
   console.log(`  Port:        ${PORT}`);

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Moon, Sun, ChevronDown } from "lucide-react";
-import { InstagramIcon } from "./Icons";
 
 import instaLogo from "../assets/insta-logo.png";
 

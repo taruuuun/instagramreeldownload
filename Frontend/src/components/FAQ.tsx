@@ -4,12 +4,12 @@ import { Plus, Minus } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 
 const faqs = [
-  { question: "Is this Instagram downloader free?", answer: "Yes, InstaSave is completely free to use. There are no hidden charges, subscriptions, or premium tiers. You can download unlimited Instagram content without paying anything." },
+  { question: "Is this Instagram downloader free?", answer: "Yes, Save Reel is completely free to use. There are no hidden charges, subscriptions, or premium tiers. You can download unlimited Instagram content without paying anything." },
   { question: "Is it safe to use?", answer: "Absolutely. We don't store any of your data or downloaded content on our servers. Your privacy is our top priority. We don't require login or any personal information." },
   { question: "Can I download Instagram reels?", answer: "Yes! You can download Instagram Reels in HD quality. Simply copy the reel link from Instagram and paste it in the input box above. You'll get options to download in HD and SD quality." },
   { question: "Can I download Instagram stories?", answer: "Yes, you can download Instagram stories from public accounts. Copy the story link and paste it here. Note that stories are only available for 24 hours, so download them before they expire." },
   { question: "Why is the download failing?", answer: "Downloads may fail if the content is from a private account, the link is invalid, or the content has been deleted. Make sure you're using a direct link to a public Instagram post. If the issue persists, try refreshing the page." },
-  { question: "Do I need to create an account?", answer: "No, you don't need to create any account or log in. InstaSave works without any registration. Just paste the link and download instantly." },
+  { question: "Do I need to create an account?", answer: "No, you don't need to create any account or log in. Save Reel works without any registration. Just paste the link and download instantly." },
 ];
 
 function FAQItem({ faq, isOpen, onClick }: { faq: { question: string; answer: string }; isOpen: boolean; onClick: () => void }) {

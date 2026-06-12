@@ -119,7 +119,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-white/5 gap-4">
-          <p className="text-gray-500 text-sm">© {new Date().getFullYear()} InstaSave. All rights reserved.</p>
+          <p className="text-gray-500 text-sm">© {new Date().getFullYear()} Save Reel. All rights reserved.</p>
           <p className="text-gray-500 text-sm flex items-center gap-1">
             Made with <Heart className="w-3.5 h-3.5 text-ig-red fill-current" /> for Instagram lovers
           </p>
