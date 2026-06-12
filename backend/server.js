@@ -64,6 +64,14 @@ app.use((req, res, next) => {
 // Routes
 // ========================
 
+// Root Route
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "Save Reel API is running.",
+    health: "/api/health"
+  });
+});
+
 // Health Check
 app.get("/api/health", (req, res) => {
   res.status(200).json({
